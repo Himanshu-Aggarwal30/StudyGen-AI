@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}StudyGen AI – Smart Study Assistant{% endblock %}
+
+{% block content %}
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="sg-hero py-5">
+  <div class="container py-4">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-6">
+        <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill">
+          <i class="bi bi-stars me-1"></i> Powered by IBM Granite
+        </span>
+        <h1 class="display-4 fw-bold mb-4 lh-sm">
+          Study Smarter with<br><span class="sg-gradient-text">Agentic AI</span>
+        </h1>
+        <p class="lead text-muted mb-4">
+          Upload your study materials and let 6 specialised AI agents collaborate to
+          summarise content, generate quizzes, answer doubts, and create personalised
+          study plans — all grounded in your own documents.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="/dashboard" class="btn btn-primary btn-lg px-4 rounded-pill">
+            <i class="bi bi-rocket-takeoff me-2"></i>Get Started
+          </a>
+          <a href="/upload" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+            <i class="bi bi-cloud-upload me-2"></i>Upload PDF
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <div class="sg-hero-visual p-4 rounded-4">
+          <div class="row g-3">
+            {% set agents = [
+              ("bi-file-earmark-pdf","Document Agent","PDF Processing","primary"),
+              ("bi-search","Retrieval Agent","RAG + FAISS","success"),
+              ("bi-journal-text","Summary Agent","Smart Summaries","info"),
+              ("bi-patch-question","Quiz Agent","Question Gen","warning"),
+              ("bi-calendar-check","Planner Agent","Study Plans","danger"),
+              ("bi-chat-dots","Doubt Agent","AI Q&A","secondary")
+            ] %}
+            {% for icon, name, desc, color in agents %}
+            <div class="col-6 col-md-4">
+              <div class="sg-agent-card card h-100 border-0 shadow-sm text-center p-3">
+                <i class="bi {{ icon }} fs-2 text-{{ color }} mb-2"></i>
+                <div class="fw-semibold small">{{ name }}</div>
+                <div class="text-muted" style="font-size:0.72rem;">{{ desc }}</div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Feature cards ─────────────────────────────────────── -->
+<section class="py-5 bg-body-secondary">
+  <div class="container py-3">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Everything You Need to Ace Your Exams</h2>
+      <p class="text-muted">10 powerful AI features driven by IBM Granite models</p>
+    </div>
+    <div class="row g-4">
+      {% set features = [
+        ("bi-file-earmark-pdf","PDF Upload","Upload textbooks, notes, or lecture slides and let AI extract all the knowledge.","primary"),
+        ("bi-journal-richtext","AI Summaries","Get concise chapter summaries, key points, and exam notes instantly.","success"),
+        ("bi-patch-question-fill","Quiz Generator","Generate MCQ, short-answer, and essay questions with model answers.","warning"),
+        ("bi-chat-heart","AI Tutor Chat","Ask any question and get grounded, student-friendly explanations.","info"),
+        ("bi-card-text","Flashcards","Auto-generate study flashcards for quick revision sessions.","danger"),
+        ("bi-calendar2-week","Study Planner","Get a personalised daily/weekly study schedule with exam-date planning.","secondary"),
+        ("bi-lightbulb","Topic Identifier","AI identifies the most important topics to focus on.","primary"),
+        ("bi-graph-up","Progress Tracker","Track your study sessions and quiz performance over time.","success"),
+        ("bi-shield-check","Exam Guidance","Targeted advice for your specific exam type and subject.","warning"),
+        ("bi-robot","Agentic RAG","All answers are grounded in your uploaded material via FAISS retrieval.","info")
+      ] %}
+      {% for icon, title, desc, color in features %}
+      <div class="col-sm-6 col-lg-4 col-xl-3">
+        <div class="card h-100 border-0 shadow-sm sg-feature-card">
+          <div class="card-body p-4">
+            <div class="sg-icon-circle bg-{{ color }} bg-opacity-10 mb-3">
+              <i class="bi {{ icon }} text-{{ color }} fs-4"></i>
+            </div>
+            <h6 class="fw-bold mb-2">{{ title }}</h6>
+            <p class="text-muted small mb-0">{{ desc }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ──────────────────────────────────────── -->
+<section class="py-5">
+  <div class="container py-3">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">How StudyGen AI Works</h2>
+      <p class="text-muted">A multi-agent pipeline powered by IBM watsonx.ai</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% set steps = [
+        ("1","bi-cloud-upload","Upload","Drop your PDF study materials – textbooks, notes, or slides."),
+        ("2","bi-cpu","Process","Document Agent extracts and structures the content."),
+        ("3","bi-search","Retrieve","FAISS-based RAG indexes and retrieves relevant context."),
+        ("4","bi-stars","Generate","Granite models power summaries, quizzes, plans, and chat."),
+        ("5","bi-mortarboard","Study","Use the AI-generated content to study smarter and faster.")
+      ] %}
+      {% for n, icon, step, desc in steps %}
+      <div class="col-sm-6 col-lg-4 col-xl-2">
+        <div class="text-center sg-step-card p-4">
+          <div class="sg-step-badge mb-3">{{ n }}</div>
+          <i class="bi {{ icon }} fs-2 text-primary mb-2 d-block"></i>
+          <h6 class="fw-bold">{{ step }}</h6>
+          <p class="text-muted small mb-0">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="sg-cta py-5">
+  <div class="container text-center py-4">
+    <h2 class="fw-bold mb-3">Ready to Transform Your Study Sessions?</h2>
+    <p class="text-muted mb-4">Join thousands of students using AI to study smarter.</p>
+    <a href="/upload" class="btn btn-warning btn-lg px-5 rounded-pill fw-semibold">
+      <i class="bi bi-cloud-upload me-2"></i>Upload Your First Document
+    </a>
+  </div>
+</section>
+{% endblock %}

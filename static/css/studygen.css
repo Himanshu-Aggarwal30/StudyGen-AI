@@ -1,0 +1,286 @@
+/* ============================================================
+   StudyGen AI – Main Stylesheet
+   Modern educational dashboard with dark mode support
+   ============================================================ */
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  --sg-primary: #3b5bdb;
+  --sg-secondary: #7c5cd8;
+  --sg-accent: #f59f00;
+  --sg-success: #2f9e44;
+  --sg-bg: #f8f9fb;
+  --sg-card-bg: #ffffff;
+  --sg-border: #e9ecef;
+  --sg-text: #1a1d23;
+  --sg-muted: #6c757d;
+  --sg-navbar-bg: #1a1d23;
+  --sg-navbar-text: rgba(255,255,255,0.88);
+  --sg-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --sg-shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  --sg-radius: 12px;
+  --sg-font: -apple-system, "Segoe UI", system-ui, sans-serif;
+  --sg-transition: 0.2s ease;
+}
+
+[data-bs-theme="dark"] {
+  --sg-bg: #111318;
+  --sg-card-bg: #1c2030;
+  --sg-border: #2e3347;
+  --sg-text: #e8eaf0;
+  --sg-muted: #9098b0;
+  --sg-navbar-bg: #0d0f16;
+  --sg-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  --sg-shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--sg-font);
+  background: var(--sg-bg);
+  color: var(--sg-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background var(--sg-transition), color var(--sg-transition);
+}
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.sg-navbar {
+  background: var(--sg-navbar-bg) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  min-height: 62px;
+}
+
+.sg-brand { color: #fff !important; font-size: 1.15rem; letter-spacing: -0.3px; }
+.sg-navbar .nav-link {
+  color: var(--sg-navbar-text) !important;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem !important;
+  transition: background var(--sg-transition);
+}
+.sg-navbar .nav-link:hover { background: rgba(255,255,255,0.08); color: #fff !important; }
+.sg-navbar .nav-link.active { background: rgba(255,255,255,0.12); color: #fff !important; }
+
+.sg-ibm-badge {
+  background: rgba(59,91,219,0.25) !important;
+  color: #7ea7ff !important;
+  border: 1px solid rgba(59,91,219,0.4);
+  font-size: 0.72rem;
+  letter-spacing: 0.3px;
+}
+
+/* ── Main / Footer ───────────────────────────────────────── */
+.sg-main { flex: 1 0 auto; }
+.sg-footer {
+  background: var(--sg-navbar-bg);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+  flex-shrink: 0;
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.sg-hero { background: var(--sg-card-bg); }
+
+.sg-gradient-text {
+  background: linear-gradient(135deg, var(--sg-primary), var(--sg-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sg-hero-visual {
+  background: linear-gradient(135deg, rgba(59,91,219,0.06), rgba(124,92,216,0.06));
+  border: 1px solid var(--sg-border);
+}
+
+.sg-agent-card {
+  background: var(--sg-card-bg) !important;
+  border: 1px solid var(--sg-border) !important;
+  transition: transform var(--sg-transition), box-shadow var(--sg-transition);
+}
+.sg-agent-card:hover { transform: translateY(-3px); box-shadow: var(--sg-shadow-lg) !important; }
+
+/* ── CTA section ─────────────────────────────────────────── */
+.sg-cta {
+  background: linear-gradient(135deg, rgba(59,91,219,0.05), rgba(124,92,216,0.05));
+  border-top: 1px solid var(--sg-border);
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--sg-card-bg) !important;
+  border: 1px solid var(--sg-border) !important;
+  transition: transform var(--sg-transition), box-shadow var(--sg-transition);
+}
+
+.sg-feature-card:hover, .sg-action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sg-shadow-lg) !important;
+}
+
+.sg-action-card { color: var(--sg-text) !important; }
+.sg-action-card:hover { color: var(--sg-primary) !important; }
+
+/* ── Icon Circle ─────────────────────────────────────────── */
+.sg-icon-circle {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Steps ───────────────────────────────────────────────── */
+.sg-step-card { transition: transform var(--sg-transition); }
+.sg-step-card:hover { transform: translateY(-4px); }
+.sg-step-badge {
+  width: 36px; height: 36px;
+  background: var(--sg-primary);
+  color: #fff;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem;
+  margin: 0 auto;
+}
+
+/* ── Stat cards ──────────────────────────────────────────── */
+.sg-stat-card { transition: transform var(--sg-transition); }
+.sg-stat-card:hover { transform: translateY(-2px); box-shadow: var(--sg-shadow-lg) !important; }
+
+/* ── Pipeline ────────────────────────────────────────────── */
+.sg-pipeline-node {
+  background: var(--sg-bg);
+  border: 1px solid var(--sg-border);
+  min-width: 90px;
+  transition: transform var(--sg-transition);
+}
+.sg-pipeline-node:hover { transform: scale(1.05); }
+
+/* ── Drop Zone (Upload) ───────────────────────────────────── */
+.sg-drop-zone {
+  border: 2px dashed var(--sg-border);
+  background: var(--sg-bg);
+  cursor: pointer;
+  transition: border-color var(--sg-transition), background var(--sg-transition);
+}
+.sg-drop-zone:hover, .sg-drop-zone.drag-over {
+  border-color: var(--sg-primary);
+  background: rgba(59,91,219,0.04);
+}
+
+/* ── Chat ────────────────────────────────────────────────── */
+.sg-chat-header { background: var(--sg-card-bg); }
+.sg-chat-input  { background: var(--sg-card-bg); }
+
+#chatMessages { background: var(--sg-bg); }
+
+.sg-msg { margin-bottom: 1rem; animation: sg-fadein 0.25s ease; }
+
+@keyframes sg-fadein {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sg-bubble {
+  max-width: 78%;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.sg-bubble-ai {
+  background: var(--sg-card-bg);
+  border: 1px solid var(--sg-border);
+  color: var(--sg-text);
+}
+.sg-bubble-user {
+  background: var(--sg-primary);
+  color: #fff;
+  margin-left: auto;
+}
+.sg-msg-user { flex-direction: row-reverse; }
+.sg-msg-user .sg-bubble { text-align: right; }
+
+.sg-chip {
+  font-size: 0.78rem;
+  border-radius: 20px;
+  transition: background var(--sg-transition);
+}
+
+/* Typing indicator */
+.sg-typing .dot {
+  width: 8px; height: 8px;
+  background: var(--sg-muted);
+  border-radius: 50%;
+  display: inline-block;
+  animation: sg-bounce 1.2s infinite;
+}
+.sg-typing .dot:nth-child(2) { animation-delay: 0.2s; }
+.sg-typing .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes sg-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+/* ── Result Content ──────────────────────────────────────── */
+.sg-result-content {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.sg-result-content strong, .sg-result-content b { color: var(--sg-primary); }
+
+/* ── Flashcard Flipper ───────────────────────────────────── */
+.sg-card-scene {
+  width: 100%;
+  height: 260px;
+  perspective: 1200px;
+  cursor: pointer;
+}
+.sg-card-flipper {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(.4,2,.6,1);
+}
+.sg-card-flipper.flipped { transform: rotateY(180deg); }
+.sg-card-front, .sg-card-back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+.sg-card-back { transform: rotateY(180deg); }
+
+/* ── Planner tabs ────────────────────────────────────────── */
+#plannerTabs .nav-link { color: var(--sg-text); background: var(--sg-bg); border: 1px solid var(--sg-border); }
+#plannerTabs .nav-link.active { background: #dc3545; color: #fff; border-color: #dc3545; }
+
+/* ── Processing steps ────────────────────────────────────── */
+.sg-proc-step { transition: opacity 0.4s ease; }
+.sg-proc-step.done { opacity: 1 !important; }
+.sg-proc-step.done .sg-proc-icon i { color: #2f9e44 !important; }
+
+/* ── Responsive tweaks ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .sg-bubble { max-width: 92%; }
+  .display-4 { font-size: 2rem; }
+  .sg-card-scene { height: 220px; }
+}
+
+/* ── Utility ─────────────────────────────────────────────── */
+.letter-spacing-1 { letter-spacing: 0.05em; }
+pre { background: var(--sg-bg); border: 1px solid var(--sg-border); border-radius: 8px; padding: 1rem; font-size: 0.82rem; overflow-x: auto; }
+
+/* scrollbar thin */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); }

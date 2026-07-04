@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}AI Tutor Chat – StudyGen AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0" style="height:calc(100vh - 70px);display:flex;flex-direction:column;">
+
+  <!-- Chat Header -->
+  <div class="sg-chat-header px-4 py-3 border-bottom d-flex align-items-center gap-3">
+    <div class="sg-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:44px;height:44px;">
+      <i class="bi bi-robot fs-5"></i>
+    </div>
+    <div>
+      <div class="fw-bold">StudyGen AI Tutor</div>
+      <div class="text-muted small d-flex align-items-center gap-1">
+        <span class="sg-status-dot bg-success rounded-circle d-inline-block" style="width:8px;height:8px;"></span>
+        Doubt Solving Agent · IBM Granite · RAG-Grounded
+      </div>
+    </div>
+    <div class="ms-auto d-flex gap-2">
+      {% if documents %}
+      <span class="badge bg-success-subtle text-success border border-success-subtle">
+        <i class="bi bi-database-check me-1"></i>{{ documents|length }} doc(s) loaded
+      </span>
+      {% else %}
+      <a href="/upload" class="badge bg-warning-subtle text-warning border border-warning-subtle text-decoration-none">
+        <i class="bi bi-exclamation-triangle me-1"></i>No docs – Upload first
+      </a>
+      {% endif %}
+      <button id="clearChat" class="btn btn-sm btn-outline-secondary rounded-pill">
+        <i class="bi bi-trash3 me-1"></i>Clear
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatMessages" class="flex-grow-1 overflow-auto p-4">
+    <!-- Welcome message -->
+    <div class="sg-msg sg-msg-ai d-flex gap-3 mb-4">
+      <div class="sg-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:36px;height:36px;min-width:36px;">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div class="sg-bubble sg-bubble-ai p-3 rounded-4">
+        <p class="mb-2">👋 <strong>Hi! I'm your AI Study Tutor</strong> powered by IBM Granite.</p>
+        <p class="mb-2">I can help you:</p>
+        <ul class="mb-2">
+          <li>Answer questions about your uploaded study material</li>
+          <li>Explain difficult concepts in simple language</li>
+          <li>Provide learning recommendations</li>
+          <li>Help you understand key topics</li>
+        </ul>
+        <p class="mb-0 text-muted small">
+          {% if documents %}
+            📚 I have access to <strong>{{ documents|length }}</strong> document(s) in my knowledge base.
+          {% else %}
+            💡 Upload a PDF first to get grounded, document-based answers!
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+    <!-- Suggestion chips -->
+    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center" id="suggestions">
+      {% set chips = [
+        "Summarise the main topics",
+        "What are the key concepts?",
+        "Explain the most important ideas",
+        "What should I focus on for exams?",
+        "Give me learning recommendations"
+      ] %}
+      {% for chip in chips %}
+      <button class="btn btn-sm btn-outline-primary rounded-pill sg-chip" data-msg="{{ chip }}">{{ chip }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="sg-chat-input border-top p-3 px-4">
+    <div class="d-flex gap-3 align-items-end">
+      <div class="flex-grow-1 position-relative">
+        <textarea id="chatInput" class="form-control rounded-4 pe-5"
+          rows="1" placeholder="Ask anything about your study material…"
+          style="resize:none;overflow:hidden;min-height:48px;max-height:180px;"></textarea>
+      </div>
+      <button id="sendBtn" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+        style="width:48px;height:48px;">
+        <i class="bi bi-send-fill" id="sendIcon"></i>
+        <span class="spinner-border spinner-border-sm d-none" id="sendSpinner"></span>
+      </button>
+    </div>
+    <div class="d-flex justify-content-between mt-2">
+      <span class="text-muted" style="font-size:0.72rem;">
+        <i class="bi bi-shield-lock me-1"></i>Grounded in your uploaded documents via RAG
+      </span>
+      <span class="text-muted" style="font-size:0.72rem;">Press Enter to send · Shift+Enter for new line</span>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}StudyGen AI{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/studygen.css') }}" />
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────── -->
+<nav class="navbar navbar-expand-lg sg-navbar sticky-top">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand sg-brand fw-bold" href="/">
+      <i class="bi bi-mortarboard-fill text-warning me-2"></i>StudyGen AI
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav me-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="/dashboard"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="/upload"><i class="bi bi-cloud-upload me-1"></i>Upload</a></li>
+        <li class="nav-item"><a class="nav-link" href="/chat"><i class="bi bi-chat-dots me-1"></i>AI Tutor</a></li>
+        <li class="nav-item"><a class="nav-link" href="/summary"><i class="bi bi-journal-text me-1"></i>Summarize</a></li>
+        <li class="nav-item"><a class="nav-link" href="/quiz"><i class="bi bi-patch-question me-1"></i>Quiz</a></li>
+        <li class="nav-item"><a class="nav-link" href="/flashcards"><i class="bi bi-card-text me-1"></i>Flashcards</a></li>
+        <li class="nav-item"><a class="nav-link" href="/planner"><i class="bi bi-calendar-week me-1"></i>Planner</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge sg-ibm-badge"><i class="bi bi-cpu me-1"></i>IBM Granite</span>
+        <!-- Dark mode toggle -->
+        <button class="btn btn-sm btn-outline-secondary" id="themeToggle" title="Toggle dark mode">
+          <i class="bi bi-moon-fill" id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Main content ─────────────────────────────────────── -->
+<main class="sg-main">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container mt-3">
+        {% for cat, msg in messages %}
+          <div class="alert alert-{{ cat }} alert-dismissible fade show" role="alert">
+            {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer class="sg-footer mt-auto py-4">
+  <div class="container text-center">
+    <p class="mb-1 small text-muted">
+      <i class="bi bi-mortarboard-fill text-warning me-1"></i>
+      <strong>StudyGen AI</strong> – Powered by <strong>IBM watsonx.ai Granite</strong>
+    </p>
+    <p class="mb-0 text-muted" style="font-size:0.75rem;">
+      Agentic Smart Study Assistant &copy; 2025
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/studygen.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

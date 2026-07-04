@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% block title %}Study Planner – StudyGen AI{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width:860px;">
+  <div class="mb-4">
+    <h2 class="fw-bold mb-1"><i class="bi bi-calendar-week text-danger me-2"></i>Study Planner Agent</h2>
+    <p class="text-muted">Create a personalised study schedule powered by IBM Granite's reasoning</p>
+  </div>
+
+  <!-- Plan Type Tabs -->
+  <ul class="nav nav-pills mb-4 gap-2" id="plannerTabs">
+    <li class="nav-item">
+      <button class="nav-link active rounded-pill" data-tab="plan">
+        <i class="bi bi-calendar-check me-1"></i>Full Study Plan
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link rounded-pill" data-tab="weekly">
+        <i class="bi bi-calendar-week me-1"></i>Weekly Schedule
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link rounded-pill" data-tab="tips">
+        <i class="bi bi-lightbulb me-1"></i>Exam Tips
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link rounded-pill" data-tab="checklist">
+        <i class="bi bi-check2-square me-1"></i>Revision Checklist
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab: Full Study Plan -->
+  <div id="tab-plan" class="sg-planner-tab">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Subject / Course</label>
+            <input type="text" id="planSubject" class="form-control rounded-3" placeholder="e.g. Organic Chemistry" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Exam Date</label>
+            <input type="date" id="planExamDate" class="form-control rounded-3" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Daily Hours</label>
+            <select id="planHours" class="form-select rounded-3">
+              <option value="1">1 hour</option>
+              <option value="2">2 hours</option>
+              <option value="3" selected>3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5 hours</option>
+              <option value="6">6+ hours</option>
+            </select>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label fw-semibold">Topics to Cover <span class="text-muted fw-normal">(comma separated)</span></label>
+            <input type="text" id="planTopics" class="form-control rounded-3" placeholder="e.g. Alkanes, Alkenes, Reaction Mechanisms…" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Your Current Level</label>
+            <select id="planLevel" class="form-select rounded-3">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate" selected>Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <button id="generatePlanBtn" class="btn btn-danger rounded-pill px-4">
+              <span id="planBtnText"><i class="bi bi-calendar-check me-2"></i>Generate Study Plan</span>
+              <span id="planSpinner" class="d-none"><span class="spinner-border spinner-border-sm me-2"></span>Planning…</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Weekly Schedule -->
+  <div id="tab-weekly" class="sg-planner-tab d-none">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Subjects (comma separated)</label>
+            <input type="text" id="weeklySubjects" class="form-control rounded-3" placeholder="e.g. Maths, Physics, Chemistry" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Daily Hours</label>
+            <select id="weeklyHours" class="form-select rounded-3">
+              <option value="2">2 hours</option>
+              <option value="3" selected>3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5 hours</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Week Number</label>
+            <select id="weeklyWeek" class="form-select rounded-3">
+              <option value="1" selected>Week 1</option>
+              <option value="2">Week 2</option>
+              <option value="3">Week 3</option>
+              <option value="4">Week 4</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <button id="generateWeeklyBtn" class="btn btn-danger rounded-pill px-4">
+              <span id="weeklyBtnText"><i class="bi bi-calendar-week me-2"></i>Generate Weekly Schedule</span>
+              <span id="weeklySpinner" class="d-none"><span class="spinner-border spinner-border-sm me-2"></span>Planning…</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Exam Tips -->
+  <div id="tab-tips" class="sg-planner-tab d-none">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-5">
+            <label class="form-label fw-semibold">Subject</label>
+            <input type="text" id="tipsSubject" class="form-control rounded-3" placeholder="e.g. Statistics" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Exam Type</label>
+            <select id="tipsExamType" class="form-select rounded-3">
+              <option value="written">Written</option>
+              <option value="MCQ">Multiple Choice</option>
+              <option value="practical">Practical</option>
+              <option value="oral">Oral / Viva</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <button id="generateTipsBtn" class="btn btn-danger w-100 rounded-pill">
+              <span id="tipsBtnText"><i class="bi bi-lightbulb me-2"></i>Get Tips</span>
+              <span id="tipsSpinner" class="d-none"><span class="spinner-border spinner-border-sm me-2"></span>Generating…</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Checklist -->
+  <div id="tab-checklist" class="sg-planner-tab d-none">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-5">
+            <label class="form-label fw-semibold">Subject</label>
+            <input type="text" id="checklistSubject" class="form-control rounded-3" placeholder="e.g. Biology" />
+          </div>
+          <div class="col-md-5">
+            <label class="form-label fw-semibold">Topics (comma separated)</label>
+            <input type="text" id="checklistTopics" class="form-control rounded-3" placeholder="e.g. Cells, DNA, Mitosis" />
+          </div>
+          <div class="col-md-2">
+            <button id="generateChecklistBtn" class="btn btn-danger w-100 rounded-pill">
+              <span id="checklistBtnText"><i class="bi bi-check2-square me-1"></i>Create</span>
+              <span id="checklistSpinner" class="d-none"><span class="spinner-border spinner-border-sm me-2"></span>…</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="plannerResult" class="d-none">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center px-4 py-3">
+        <h6 class="fw-bold mb-0"><i class="bi bi-calendar-check text-danger me-2"></i>Your Study Plan</h6>
+        <button id="copyPlan" class="btn btn-sm btn-outline-secondary rounded-pill">
+          <i class="bi bi-clipboard me-1"></i>Copy
+        </button>
+      </div>
+      <div class="card-body p-4">
+        <div id="plannerContent" class="sg-result-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="plannerEmpty" class="text-center py-5 text-muted">
+    <i class="bi bi-calendar3 fs-1 d-block mb-3"></i>
+    <p>Fill in the form above and generate your personalised study plan.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/planner.js') }}"></script>
+{% endblock %}
