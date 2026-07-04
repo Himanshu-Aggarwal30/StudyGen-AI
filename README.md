@@ -295,4 +295,4 @@ MIT License – See [LICENSE](LICENSE) for details.
 
 ---
 
-*Built with ❤️ using IBM watsonx.ai Granite · Flask · FAISS · SentenceTransformers · Bootstrap 5*
+*Built using IBM watsonx.ai Granite · Flask · FAISS · SentenceTransformers · Bootstrap 5*
